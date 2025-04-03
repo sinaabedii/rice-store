@@ -1,7 +1,6 @@
 import React from 'react';
 import ProductCard from '@/components/ui/ProductCard';
 
-// Data mockup
 const PRODUCTS = [
   {
     id: '1',

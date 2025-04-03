@@ -25,7 +25,6 @@ const ProductFilter = () => {
   
   return (
     <>
-      {/* Mobile Filter Button */}
       <div className="lg:hidden mb-4">
         <button
           onClick={() => setIsFilterOpen(true)}
@@ -36,7 +35,6 @@ const ProductFilter = () => {
         </button>
       </div>
       
-      {/* Filter Sidebar (Mobile) */}
       {isFilterOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setIsFilterOpen(false)} />
@@ -58,7 +56,6 @@ const ProductFilter = () => {
             </div>
             
             <div className="p-4">
-              {/* Filter Content - Same as desktop */}
               <FilterContent 
                 categories={categories} 
                 weights={weights}
@@ -70,7 +67,6 @@ const ProductFilter = () => {
         </div>
       )}
       
-      {/* Desktop Filter Sidebar */}
       <div className="hidden lg:block bg-white rounded-lg shadow-md p-4">
         <h3 className="font-semibold text-lg border-b pb-2 mb-4">فیلتر محصولات</h3>
         
@@ -100,7 +96,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
 }) => {
   return (
     <div className="space-y-6">
-      {/* Categories */}
       <div>
         <h4 className="font-medium mb-2">نوع برنج</h4>
         <div className="space-y-2">
@@ -119,7 +114,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
         </div>
       </div>
       
-      {/* Weights */}
       <div>
         <h4 className="font-medium mb-2">وزن</h4>
         <div className="space-y-2">
@@ -138,7 +132,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
         </div>
       </div>
       
-      {/* Price Range */}
       <div>
         <h4 className="font-medium mb-2">محدوده قیمت</h4>
         <div className="mb-4">
@@ -158,12 +151,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
         </div>
       </div>
       
-      {/* Submit Button */}
       <button className="w-full btn-primary">
         اعمال فیلتر
       </button>
       
-      {/* Reset Button */}
       <button className="w-full btn-outline">
         حذف فیلترها
       </button>

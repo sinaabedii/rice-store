@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Vazirmatn';
+  font-family: 'IranSansX';
   src: url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
@@ -11,8 +11,8 @@
 }
 
 @font-face {
-  font-family: 'Vazirmatn';
-  src: url('/fonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-family: 'IranSansX';
+  src: url('/fonts/IranSansBold.ttf') format('ttf');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 body {
   direction: var(--direction);
-  font-family: 'Vazirmatn', sans-serif;
+  font-family: "IranSansX", sans-serif;
   background-color: #FFFDF5;
 }
 

@@ -2,22 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import {
-  FiMail,
-  FiLock,
-  FiUser,
-  FiPhone,
-  FiEye,
-  FiEyeOff,
-  FiArrowLeft,
-} from "react-icons/fi";
+import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-/**
- * صفحه ورود
- */
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -36,9 +24,6 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // در اینجا می‌توان اطلاعات را به سرور ارسال کرد
-    console.log("Login submitted:", formData);
-    // مسیردهی به صفحه اصلی یا داشبورد کاربر پس از ورود موفق
   };
 
   return (

@@ -2,27 +2,16 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import {
-  FiMail,
-  FiLock,
-  FiUser,
-  FiPhone,
-  FiEye,
-  FiEyeOff,
-  FiArrowLeft,
-} from "react-icons/fi";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 const OtpVerificationPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [timer, setTimer] = useState(120); // 2 دقیقه
+  const [timer, setTimer] = useState(120);
   const inputRefs = Array(6)
     .fill(0)
     .map(() => React.createRef());
 
-  // شبیه‌سازی تایمر
   React.useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => {
@@ -33,7 +22,6 @@ const OtpVerificationPage = () => {
   }, [timer]);
 
   const handleChange = (index, value) => {
-    // بررسی اینکه ورودی فقط عدد باشد
     if (value && !/^\d+$/.test(value)) return;
 
     const newOtp = [...otp];
@@ -57,7 +45,6 @@ const OtpVerificationPage = () => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text").trim();
 
-    // اگر داده کپی شده 6 رقم باشد، آن را در فیلدها پر می‌کنیم
     if (/^\d{6}$/.test(pastedData)) {
       const newOtp = pastedData.split("");
       setOtp(newOtp);
@@ -72,19 +59,14 @@ const OtpVerificationPage = () => {
       alert("لطفاً کد تأیید 6 رقمی را وارد کنید");
       return;
     }
-    // در اینجا می‌توان کد را به سرور ارسال کرد
     console.log("OTP submitted:", otpValue);
-    // مسیردهی به صفحه بعدی پس از تأیید موفق
   };
 
-  // راه‌اندازی مجدد تایمر
   const resendOtp = () => {
-    // در اینجا می‌توان درخواست ارسال مجدد کد را به سرور ارسال کرد
     console.log("Resend OTP");
     setTimer(120);
   };
 
-  // تبدیل ثانیه به فرمت دقیقه:ثانیه
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;

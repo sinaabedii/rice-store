@@ -88,7 +88,6 @@ const ContactInfo = () => {
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-semibold text-accent mb-6">موقعیت ما روی نقشه</h2>
         <div className="h-64 bg-gray-200 rounded-md">
-          {/* در اینجا میتوان از کتابخانه‌های نقشه مانند Leaflet یا Google Maps استفاده کرد */}
           <div className="w-full h-full flex items-center justify-center text-gray-500">
             <div className="text-center">
               <FiMapPin size={32} className="mx-auto mb-2" />
