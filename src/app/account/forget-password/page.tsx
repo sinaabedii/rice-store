@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
 import { FiMail, FiArrowLeft } from "react-icons/fi";
 import Header from "@/components/layout/Header";
@@ -12,7 +12,7 @@ const ForgetPasswordPage = () => {
   });
   const [step, setStep] = useState(1);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -20,7 +20,7 @@ const ForgetPasswordPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStep(2);
   };

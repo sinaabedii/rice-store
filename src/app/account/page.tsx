@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -145,7 +145,7 @@ const UserProfilePage = () => {
     phone: userData.phone,
   });
 
-  const handleProfileChange = (e) => {
+  const handleProfileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfileData((prev) => ({
       ...prev,
@@ -153,7 +153,7 @@ const UserProfilePage = () => {
     }));
   };
 
-  const handleProfileSubmit = (e) => {
+  const handleProfileSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Updating profile:", profileData);
     setEditingProfile(false);

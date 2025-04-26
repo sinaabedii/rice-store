@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,18 @@ import { FiFilter, FiGrid, FiList } from "react-icons/fi";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const PRODUCTS_MOCK = [
+// تعریف تایپ محصول
+interface Product {
+  id: string;
+  title: string;
+  price: number;
+  image: string;
+  category: string;
+  description: string;
+  inStock: boolean;
+}
+
+const PRODUCTS_MOCK: Product[] = [
   {
     id: "1",
     title: "برنج طارم اعلا",
@@ -65,19 +76,26 @@ const PRODUCTS_MOCK = [
   },
 ];
 
+// تعریف تایپ فیلترها
+interface ActiveFilters {
+  categories: string[];
+  priceRange: [number, number];
+  availability: 'all' | 'inStock' | 'outOfStock';
+}
+
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
 
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeFilters, setActiveFilters] = useState({
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
     categories: [],
     priceRange: [0, 1000000],
     availability: "all",
   });
-  const [viewMode, setViewMode] = useState("grid");
-  const [sortBy, setSortBy] = useState("relevance");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState<"relevance" | "price_asc" | "price_desc" | "newest">("relevance");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
@@ -130,7 +148,7 @@ export default function SearchPage() {
     ...new Set(PRODUCTS_MOCK.map((product) => product.category)),
   ];
 
-  const handleCategoryFilter = (category) => {
+  const handleCategoryFilter = (category: string) => {
     setActiveFilters((prev) => {
       const categories = [...prev.categories];
       const index = categories.indexOf(category);
@@ -145,14 +163,14 @@ export default function SearchPage() {
     });
   };
 
-  const handlePriceRangeChange = (min, max) => {
+  const handlePriceRangeChange = (min: number, max: number) => {
     setActiveFilters((prev) => ({
       ...prev,
       priceRange: [min, max],
     }));
   };
 
-  const handleAvailabilityChange = (value) => {
+  const handleAvailabilityChange = (value: 'all' | 'inStock' | 'outOfStock') => {
     setActiveFilters((prev) => ({
       ...prev,
       availability: value,
@@ -182,7 +200,7 @@ export default function SearchPage() {
 
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
+              onChange={(e) => setSortBy(e.target.value as "relevance" | "price_asc" | "price_desc" | "newest")}
               className="bg-white px-4 py-2 rounded-md shadow-sm border-none focus:ring-1 focus:ring-primary"
             >
               <option value="relevance">مرتب‌سازی: مرتبط‌ترین</option>
@@ -236,7 +254,7 @@ export default function SearchPage() {
                       type="number"
                       min="0"
                       value={activeFilters.priceRange[0]}
-                      onChange={(e) =>
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         handlePriceRangeChange(
                           Number(e.target.value),
                           activeFilters.priceRange[1]
@@ -249,7 +267,7 @@ export default function SearchPage() {
                       type="number"
                       min="0"
                       value={activeFilters.priceRange[1]}
-                      onChange={(e) =>
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         handlePriceRangeChange(
                           activeFilters.priceRange[0],
                           Number(e.target.value)
@@ -348,7 +366,7 @@ export default function SearchPage() {
                   <span className="ml-2 text-gray-700">مرتب‌سازی بر اساس:</span>
                   <select
                     value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
+                    onChange={(e) => setSortBy(e.target.value as "relevance" | "price_asc" | "price_desc" | "newest")}
                     className="border-none focus:ring-1 focus:ring-primary text-gray-700"
                   >
                     <option value="relevance">مرتبط‌ترین</option>

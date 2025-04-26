@@ -1,11 +1,18 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import { FiMessageSquare, FiX, FiSend, FiChevronDown } from "react-icons/fi";
+
+// تعریف interface برای پیام‌ها
+interface Message {
+  type: "user" | "bot";
+  content: string;
+  timestamp: Date;
+}
 
 const ChatbotWidget = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       type: "bot",
       content:
@@ -15,8 +22,8 @@ const ChatbotWidget = () => {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const suggestedQuestions = [
     "قیمت انواع برنج چقدر است؟",
@@ -38,7 +45,7 @@ const ChatbotWidget = () => {
     setIsChatOpen(!isChatOpen);
     if (!isChatOpen && inputRef.current) {
       setTimeout(() => {
-        inputRef.current.focus();
+        inputRef.current?.focus();
       }, 100);
     }
   };
@@ -46,7 +53,7 @@ const ChatbotWidget = () => {
   const handleSendMessage = () => {
     if (inputMessage.trim() === "") return;
 
-    const userMessage = {
+    const userMessage: Message = {
       type: "user",
       content: inputMessage,
       timestamp: new Date(),
@@ -70,12 +77,12 @@ const ChatbotWidget = () => {
     }, 1000);
   };
 
-  const handleSuggestedQuestion = (question) => {
+  const handleSuggestedQuestion = (question: string) => {
     setInputMessage(question);
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
-  const getBotResponse = (message) => {
+  const getBotResponse = (message: string): string => {
     const lowerCaseMessage = message.toLowerCase();
 
     if (
@@ -107,9 +114,8 @@ const ChatbotWidget = () => {
     }
   };
 
-  const formatTime = (timestamp) => {
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString("fa-IR", {
+  const formatTime = (timestamp: Date) => {
+    return timestamp.toLocaleTimeString("fa-IR", {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -230,8 +236,8 @@ const ChatbotWidget = () => {
               ref={inputRef}
               type="text"
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setInputMessage(e.target.value)}
+              onKeyPress={(e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSendMessage()}
               placeholder="پیام خود را بنویسید..."
               className="flex-grow border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
             />

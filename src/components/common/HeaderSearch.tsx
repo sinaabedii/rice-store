@@ -1,11 +1,21 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, MouseEvent, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
 import { FiSearch, FiX, FiLoader } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
-const PRODUCTS_MOCK = [
+// تعریف interface برای محصولات
+interface Product {
+  id: string;
+  title: string;
+  price: number;
+  image: string;
+  category: string;
+  inStock: boolean;
+}
+
+const PRODUCTS_MOCK: Product[] = [
   {
     id: "1",
     title: "برنج طارم اعلا",
@@ -59,23 +69,23 @@ const PRODUCTS_MOCK = [
 const HeaderSearch = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const searchRef = useRef(null);
-  const inputRef = useRef(null);
+  const searchRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowResults(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside as unknown as EventListener);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside as unknown as EventListener);
     };
   }, []);
 
@@ -113,7 +123,7 @@ const HeaderSearch = () => {
     return () => clearTimeout(timer);
   }, [query]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim() !== "") {
       router.push(`/products/search?q=${encodeURIComponent(query)}`);
@@ -122,7 +132,7 @@ const HeaderSearch = () => {
     }
   };
 
-  const handleSelectProduct = (productId) => {
+  const handleSelectProduct = (productId: string) => {
     router.push(`/products/${productId}`);
     setIsSearchOpen(false);
     setShowResults(false);
@@ -147,7 +157,7 @@ const HeaderSearch = () => {
                 ref={inputRef}
                 type="text"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
                 placeholder="نام محصول یا دسته‌بندی را وارد کنید..."
                 className="w-full border border-gray-300 rounded-md py-2 pr-10 pl-10 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
               />
@@ -211,7 +221,7 @@ const HeaderSearch = () => {
                   ))}
                   <div className="text-center p-2 border-t mt-2">
                     <button
-                      onClick={handleSubmit}
+                      onClick={() => handleSubmit({preventDefault: () => {}} as unknown as FormEvent<HTMLFormElement>)}
                       className="text-primary hover:underline text-sm"
                     >
                       مشاهده همه نتایج ({results.length})

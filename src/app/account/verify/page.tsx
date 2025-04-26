@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {
+  useState,
+  useRef,
+  ChangeEvent,
+  KeyboardEvent,
+  ClipboardEvent,
+  FormEvent,
+} from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -8,9 +15,17 @@ import Footer from "@/components/layout/Footer";
 const OtpVerificationPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timer, setTimer] = useState(120);
-  const inputRefs = Array(6)
-    .fill(0)
-    .map(() => React.createRef());
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  // Initialize refs array
+  React.useEffect(() => {
+    inputRefs.current = inputRefs.current.slice(0, 6);
+    for (let i = 0; i < 6; i++) {
+      if (!inputRefs.current[i]) {
+        inputRefs.current[i] = null;
+      }
+    }
+  }, []);
 
   React.useEffect(() => {
     if (timer > 0) {
@@ -21,7 +36,7 @@ const OtpVerificationPage = () => {
     }
   }, [timer]);
 
-  const handleChange = (index, value) => {
+  const handleChange = (index: number, value: string) => {
     if (value && !/^\d+$/.test(value)) return;
 
     const newOtp = [...otp];
@@ -29,30 +44,37 @@ const OtpVerificationPage = () => {
     setOtp(newOtp);
 
     // انتقال فوکوس به فیلد بعدی
-    if (value && index < 5) {
-      inputRefs[index + 1].current.focus();
+    if (value && index < 5 && inputRefs.current[index + 1]) {
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
-  const handleKeyDown = (index, e) => {
+  const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
     // حذف و انتقال فوکوس به فیلد قبلی
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputRefs[index - 1].current.focus();
+    if (
+      e.key === "Backspace" &&
+      !otp[index] &&
+      index > 0 &&
+      inputRefs.current[index - 1]
+    ) {
+      inputRefs.current[index - 1]?.focus();
     }
   };
 
-  const handlePaste = (e) => {
+  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text").trim();
 
     if (/^\d{6}$/.test(pastedData)) {
       const newOtp = pastedData.split("");
       setOtp(newOtp);
-      inputRefs[5].current.focus();
+      if (inputRefs.current[5]) {
+        inputRefs.current[5]?.focus();
+      }
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const otpValue = otp.join("");
     if (otpValue.length < 6) {
@@ -67,7 +89,7 @@ const OtpVerificationPage = () => {
     setTimer(120);
   };
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
@@ -116,13 +138,19 @@ const OtpVerificationPage = () => {
                   {otp.map((digit, index) => (
                     <input
                       key={index}
-                      ref={inputRefs[index]}
+                      ref={(el) => {
+                        inputRefs.current[index] = el;
+                      }}
                       type="text"
-                      maxLength="1"
+                      maxLength={1}
                       value={digit}
-                      onChange={(e) => handleChange(index, e.target.value)}
-                      onKeyDown={(e) => handleKeyDown(index, e)}
-                      onPaste={index === 0 ? handlePaste : null}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        handleChange(index, e.target.value)
+                      }
+                      onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                        handleKeyDown(index, e)
+                      }
+                      onPaste={index === 0 ? handlePaste : undefined}
                       className="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                     />
                   ))}

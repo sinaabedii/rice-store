@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
 import { FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import Header from "@/components/layout/Header";
@@ -14,7 +14,7 @@ const ResetPasswordPage = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -22,7 +22,7 @@ const ResetPasswordPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("رمز عبور و تکرار آن مطابقت ندارند");
