@@ -51,12 +51,6 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <HeaderSearch />
 
-            <Link
-              href="/account"
-              className="p-2 text-gray-700 hover:text-primary transition-colors"
-            >
-              <FiUser size={20} />
-            </Link>
 
             <Link
               href="/cart"
@@ -68,6 +62,12 @@ const Header = () => {
                   {totalItems}
                 </span>
               )}
+            </Link>
+            <Link
+              href="/account"
+              className="p-2 text-gray-700 hover:text-primary transition-colors"
+            >
+              <FiUser size={20} />
             </Link>
 
             <button
