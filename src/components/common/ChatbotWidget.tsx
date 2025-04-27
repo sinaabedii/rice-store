@@ -122,7 +122,7 @@ const ChatbotWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className="fixed bottom-6 right-10 z-50">
       <button
         onClick={toggleChat}
         className={`

@@ -8,7 +8,7 @@ const Hero = () => {
     <div className="relative h-[70vh] overflow-hidden bg-gray-900">
       <div className="absolute inset-0">
         <Image
-          src="/images/hero.jpg"
+          src="/images/hero-head.jpg"
           alt="مزارع برنج شمال"
           fill
           style={{ objectFit: "cover" }}

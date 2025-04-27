@@ -14,7 +14,7 @@ const AboutPage = () => {
         <div className="relative h-[60vh] overflow-hidden bg-gray-900">
           <div className="absolute inset-0">
             <Image
-              src="/images/about/rice-field.jpg"
+              src="/images/1273209_396.jpg"
               alt="مزارع برنج شمال"
               fill
               style={{ objectFit: "cover" }}
@@ -63,7 +63,7 @@ const AboutPage = () => {
               <div className="order-1 lg:order-2">
                 <div className="relative h-96 rounded-lg overflow-hidden shadow-xl">
                   <Image
-                    src="/images/about/story.jpg"
+                    src="/images/1273222_742.jpg"
                     alt="داستان ما"
                     fill
                     style={{ objectFit: "cover" }}
@@ -250,7 +250,7 @@ const AboutPage = () => {
           </div>
         </div>
 
-        <div className="py-16 bg-white">
+        {/* <div className="py-16 bg-white">
           <div className="container-custom">
             <div className="text-center mb-12">
               <h2 className="heading-2 text-accent mb-4">تیم ما</h2>
@@ -330,7 +330,7 @@ const AboutPage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </main>
       <Footer />
     </>

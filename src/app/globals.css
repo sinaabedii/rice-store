@@ -2,61 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'IranSansX';
-  src: url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "IranSansX", sans-serif;
 }
 
 @font-face {
-  font-family: 'IranSansX';
-  src: url('/fonts/IranSansBold.ttf') format('ttf');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
+  font-family: "IranSansX";
+  font-weight: 400;
+  src: url("/fonts/iransansx-regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IranSansX";
+  font-weight: 300;
+  src: url("/fonts/iransansx-light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "IranSansX";
+  font-weight: 700;
+  src: url("/fonts/iransansx-bold.woff") format("woff");
 }
 
 :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
   --direction: rtl;
 }
 
 body {
   direction: var(--direction);
   font-family: "IranSansX", sans-serif;
-  background-color: #FFFDF5;
+  background-color: #fffdf5;
 }
 
 @layer components {
   .btn {
     @apply px-6 py-2 rounded-md font-medium transition-all duration-300;
   }
-  
+
   .btn-primary {
     @apply btn bg-primary text-white hover:bg-primary/90;
   }
-  
+
   .btn-secondary {
     @apply btn bg-secondary text-accent hover:bg-secondary/90;
   }
-  
+
   .btn-outline {
     @apply btn border border-primary text-primary hover:bg-primary/10;
   }
-  
+
   .container-custom {
     @apply container mx-auto px-4 md:px-6 lg:px-8;
   }
-  
+
   .heading-1 {
     @apply text-3xl md:text-4xl lg:text-5xl font-bold;
   }
-  
+
   .heading-2 {
     @apply text-2xl md:text-3xl lg:text-4xl font-bold;
   }
-  
+
   .heading-3 {
     @apply text-xl md:text-2xl lg:text-3xl font-semibold;
   }
