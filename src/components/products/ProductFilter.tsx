@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiFilter, FiX } from 'react-icons/fi';
 
-// تعریف interface های مورد نیاز
 interface PriceRange {
   min: number;
   max: number;
@@ -60,14 +59,11 @@ const ProductFilter: React.FC<ProductFilterProps> = ({ activeFilters, onFilterCh
     { id: 20, name: '۲۰ کیلوگرم' },
   ];
   
-  // تغییر دامنه قیمت
   const handlePriceChange = (value: string): void => {
     onFilterChange('priceRange', { ...activeFilters.priceRange, max: parseInt(value) });
   };
   
-  // اعمال فیلتر
   const applyFilter = () => {
-    // در حالت موبایل، منوی فیلتر را می‌بندیم
     setIsFilterOpen(false);
   };
   

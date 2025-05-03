@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import { FiMessageSquare, FiX, FiSend, FiChevronDown } from "react-icons/fi";
 
-// تعریف interface برای پیام‌ها
 interface Message {
   type: "user" | "bot";
   content: string;
