@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +8,6 @@ import { FiFilter, FiGrid, FiList } from "react-icons/fi";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-// تعریف تایپ محصول
 interface Product {
   id: string;
   title: string;
@@ -76,7 +75,6 @@ const PRODUCTS_MOCK: Product[] = [
   },
 ];
 
-// تعریف تایپ فیلترها
 interface ActiveFilters {
   categories: string[];
   priceRange: [number, number];

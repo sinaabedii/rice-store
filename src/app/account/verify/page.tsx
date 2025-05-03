@@ -17,7 +17,6 @@ const OtpVerificationPage = () => {
   const [timer, setTimer] = useState(120);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Initialize refs array
   React.useEffect(() => {
     inputRefs.current = inputRefs.current.slice(0, 6);
     for (let i = 0; i < 6; i++) {
@@ -43,14 +42,12 @@ const OtpVerificationPage = () => {
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // انتقال فوکوس به فیلد بعدی
     if (value && index < 5 && inputRefs.current[index + 1]) {
       inputRefs.current[index + 1]?.focus();
     }
   };
 
   const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
-    // حذف و انتقال فوکوس به فیلد قبلی
     if (
       e.key === "Backspace" &&
       !otp[index] &&
